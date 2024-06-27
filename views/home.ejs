@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="/assets/style.css">
+</head>
+
+<body>
+
+    <h1>Minilink</h1>
+    <% if (locals.id) { %>
+        <div class="url-box ">
+            <p>
+            <h1>URL Generated</h1>
+            <span class="url-box" id="generated-url">http://localhost:8001/gen/<%= id %></span>
+            <button class="btn btn-brand" onclick="clipboard()">Copy</button>
+            </p>
+        </div>
+        <% } %>
+            <section class="data">
+                <div class="take">
+                    <form method="POST" action="/url">
+                        <label class=" labeltag">Enter your original URL</label>
+                        <input type="text" class=" full-height form-control" name="url" placeholder="google.com">
+                        <button class=" btn btn-brand" type="submit">Generate</button>
+                    </form>
+                </div>
+            </section>
+            <div>
+                <% if (locals.urls) { %>
+
+
+                    <table class="table">
+                        <th>S.NO</th>
+                        <th>CreatedBy</th>
+                        <th>RedirectTo</th>
+                        <th>MiniLink</th>
+                        <th>Clicks</th>
+                        <tbody>
+                            <% urls.forEach((url,index)=> { %>
+                                <tr>
+                                    <td>
+                                        <%= index+1 %>
+                                    </td>
+                                    <td>
+                                        <%= url.name %>
+                                    </td>
+                                    <td>
+                                        <%= url.redirectURL %>
+                                    </td>
+                                    <td>
+                                        <a href="http://localhost:8001/gen/<%= url.shortId %>">http://localhost:8001/gen/
+                                            <%= url.shortId %>
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        <%= url.visitHistory.length %>
+                                    </td>
+
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+
+                    <% } %>
+
+            </div>
+
+            <script src="assets/styles.js"></script>
+</body>
+
+</html>
